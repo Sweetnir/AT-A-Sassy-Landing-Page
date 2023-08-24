@@ -1,22 +1,42 @@
+@use "config";
+@use "btnConfig";
+@use "utilities";
+
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  
+  &::selection {
+    color: config.$primary-color;
+    background-color: config.$light-color;
+  }
 }
 
 body {
-  background-color: $light-color;
-  font-family: $font-stack;
-  line-height: 1;
+  @include utilities.set-bg(config.$primary-color);
+  // background-color: config.$primary-color;
+  font-family: config.$font-stack;
+  line-height: 1.25;
 }
 
 img {
   border-radius: 50%;
+  width: 50%;
+  padding: 2rem;
+  margin: 1rem;
+  transition: filter .25s;
+
+  &:hover {
+    filter: invert(100%) drop-shadow(0 0 .5rem config.$light-color);
+  }
+
 }
 
 a {
   text-decoration: none;
+  color: config.$light-color;
 }
 
 .hero {
@@ -26,18 +46,74 @@ a {
 
   // Also, take time to review the features of SCSS we've already covered:
   // 1. $variables
-  // 2. nesting (dont forget about the ampersand (&) parent selector!)
+  // 2. nesting (don't forget about the ampersand (&) parent selector!)
   // 3. At-Rules
+
+  margin-top: 1rem;
+
+  nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    ul {
+      list-style: none;
+      display: flex;
+
+      li {
+        padding: 1rem;
+
+        a {
+          &:hover {
+            text-decoration: underline wavy;
+          }
+
+          &:active {
+            color: config.$secondary-color;
+          }
+        }
+      }
+    }
+  }
+
+  .hero-content {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    a {
+      margin: 1rem;
+    }
+    
+  }
+
+
+
 }
 
 // This code is related to some of the aspects of SCSS we have yet to cover.
 // While you don't have to mess with it, it would be advisable to attempt to understand its functionality.
-$spaceamounts: (1,2,3,4,5);
+$spaceamounts: (
+  1,
+  2,
+  3,
+  4,
+  5
+);
 
 @each $space in $spaceamounts {
   .m-#{$space} {
     margin: #{$space}rem;
   }
+
   .my-#{$space} {
     margin: #{$space}rem 0;
   }
@@ -45,6 +121,7 @@ $spaceamounts: (1,2,3,4,5);
   .p-#{$space} {
     padding: #{$space}rem;
   }
+
   .py-#{$space} {
     padding: #{$space}rem 0;
   }
